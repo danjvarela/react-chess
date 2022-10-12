@@ -1,8 +1,20 @@
-const Cell = ({variant, piece}) => {
-  const cellColor = variant === "white" ? "bg-orange-300" : "bg-yellow-700";
+import {useDroppable} from "@dnd-kit/core";
+
+const Cell = ({isBlack, square, piece}) => {
+  // make this cell a droppable item for the pieces
+  const {isOver, setNodeRef} = useDroppable({
+    id: square,
+  });
+
+  // conditional styles
+  const borderWidth = isOver ? "border-4" : null;
+  const cellColor = isBlack ? "bg-yellow-700" : "bg-orange-300";
 
   return (
-    <div className={`${cellColor} w-full h-full flex justify-center items-center`}>
+    <div
+      className={`${cellColor} w-full h-full flex justify-center items-center ${borderWidth}`}
+      ref={setNodeRef}
+    >
       {piece}
     </div>
   );

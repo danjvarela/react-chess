@@ -1,37 +1,30 @@
-import {ReactComponent as BlackBishop} from "assets/black_bishop.svg";
-import {ReactComponent as BlackKing} from "assets/black_king.svg";
-import {ReactComponent as BlackKnight} from "assets/black_knight.svg";
-import {ReactComponent as BlackPawn} from "assets/black_pawn.svg";
-import {ReactComponent as BlackQueen} from "assets/black_queen.svg";
-import {ReactComponent as BlackRook} from "assets/black_rook.svg";
-import {ReactComponent as WhiteBishop} from "assets/white_bishop.svg";
-import {ReactComponent as WhiteKing} from "assets/white_king.svg";
-import {ReactComponent as WhiteKnight} from "assets/white_knight.svg";
-import {ReactComponent as WhitePawn} from "assets/white_pawn.svg";
-import {ReactComponent as WhiteQueen} from "assets/white_queen.svg";
-import {ReactComponent as WhiteRook} from "assets/white_rook.svg";
+import {useDraggable} from "@dnd-kit/core";
+import {useChess} from "contexts/chessContext";
+import pieces from "./pieces";
 
-const Piece = ({name, color}) => {
-  const pieces = {
-    white: {
-      bishop: <WhiteBishop />,
-      king: <WhiteKing />,
-      knight: <WhiteKnight />,
-      pawn: <WhitePawn />,
-      queen: <WhiteQueen />,
-      rook: <WhiteRook />,
-    },
-    black: {
-      bishop: <BlackBishop />,
-      king: <BlackKing />,
-      knight: <BlackKnight />,
-      pawn: <BlackPawn />,
-      queen: <BlackQueen />,
-      rook: <BlackRook />,
-    },
-  };
+const Piece = ({type, color, square}) => {
+  const {getPGNCode} = useChess();
 
-  return <div>{pieces[color][name]}</div>;
+  // make this piece a draggable item
+  const {attributes, listeners, setNodeRef, transform} = useDraggable({
+    id: square,
+  });
+  const style = transform
+    ? {
+        transform: `translate3d(${transform.x}px, ${transform.y}px, 0) scale(1.25)`,
+        zIndex: 5,
+        cursor: "grabbing",
+      }
+    : {
+        transform: "scale(1.25)",
+        cursor: "grab",
+      };
+
+  return (
+    <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
+      {pieces[getPGNCode(type, color)] ?? null}
+    </div>
+  );
 };
 
 export default Piece;
