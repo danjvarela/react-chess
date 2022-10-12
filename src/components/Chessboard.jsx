@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import Cell from "./Cell";
 import Piece from "./Piece";
 import {DndContext} from "@dnd-kit/core";
@@ -8,15 +8,18 @@ const Chessboard = () => {
   const {chess, getPositionFromIndex} = useChess();
   const [cells, setCells] = useState(chess.board().flat());
 
+  // returns true if a cell should be black based on its index
+  // index is 0 - 63
   const isBlack = (index) => {
     const col = index % 8;
     const row = Math.floor(index / 8);
     return (col + row) % 2 === 1;
   };
 
+  // handles dropping of pieces
   const handleDragEnd = (event) => {
-    // active is the item being dragged
-    // over is the cell currently the mouse is on
+    // active.id is the piece being dragged
+    // over.id is the cell currently the mouse is on
     const {over, active} = event;
     const move = chess.move({from: active.id, to: over.id});
     // if the move is valid, refresh the cells

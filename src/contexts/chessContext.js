@@ -18,6 +18,8 @@ const getPositionFromIndex = (index) => {
 // ie. black king is k, white king is K ...
 const getPGNCode = (type, color) => (color === "w" ? type.toUpperCase() : type);
 
+// main chess context
+// this exposes a couple of functions and data from the chess.js library
 const ChessProvider = ({children}) => {
   const [chess] = useState(new Chess());
   const [history, setHistory] = useState(chess.history());
