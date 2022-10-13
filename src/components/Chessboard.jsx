@@ -5,7 +5,7 @@ import {DndContext} from "@dnd-kit/core";
 import {useChess} from "contexts/chessContext";
 
 const Chessboard = () => {
-  const {chess, getPositionFromIndex} = useChess();
+  const {chess, getPositionFromIndex, setIsPromoting} = useChess();
   const [cells, setCells] = useState(chess.board().flat());
 
   // returns true if a cell should be black based on its index
@@ -16,11 +16,26 @@ const Chessboard = () => {
     return (col + row) % 2 === 1;
   };
 
+  const isPromoting = (draggedPiece, hoveredCell) => {
+    if (draggedPiece.type !== "p") return false;
+    if (draggedPiece.color === "b" && hoveredCell.includes("1")) return true;
+    if (draggedPiece.color === "w" && hoveredCell.includes("8")) return true;
+    return false;
+  };
+
   // handles dropping of pieces
   const handleDragEnd = (event) => {
     // active.id is the piece being dragged
     // over.id is the cell currently the mouse is on
     const {over, active} = event;
+
+    // check if a pawn promotion is occuring
+    const draggedPiece = chess.get(active.id);
+    if (isPromoting(draggedPiece, over.id)) {
+      // return early if a promotion is happening
+      setIsPromoting(isPromoting(draggedPiece, over.id));
+      return;
+    }
 
     const move = chess.move({
       from: active.id,

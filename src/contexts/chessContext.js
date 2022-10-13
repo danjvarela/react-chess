@@ -1,4 +1,4 @@
-import {createContext, useContext, useState} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 import {Chess} from "chess.js";
 
 const ChessContext = createContext();
@@ -21,7 +21,12 @@ const getPGNCode = (type, color) => (color === "w" ? type.toUpperCase() : type);
 // main chess context
 // this exposes a couple of functions and data from the chess.js library
 const ChessProvider = ({children}) => {
-  const [chess] = useState(new Chess());
+  const [chess] = useState(new Chess("2k5/8/8/8/8/8/1p4Q1/7K b - - 0 1"));
+  const [isPromoting, setIsPromoting] = useState(false);
+
+  useEffect(() => {
+    console.log(isPromoting);
+  }, [isPromoting]);
 
   return (
     <ChessContext.Provider
@@ -29,6 +34,8 @@ const ChessProvider = ({children}) => {
         chess,
         getPositionFromIndex,
         getPGNCode,
+        isPromoting,
+        setIsPromoting,
       }}
     >
       {children}
