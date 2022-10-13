@@ -18,15 +18,20 @@ const getPositionFromIndex = (index) => {
 // ie. black king is k, white king is K ...
 const getPGNCode = (type, color) => (color === "w" ? type.toUpperCase() : type);
 
+// returns if the square is at the top or bottom row
+// ie. e1 is at the bottom row while e8 is at the top row
+const isAtTheTop = (square) => square.includes("8");
+const isAtTheBottom = (square) => square.includes("1");
+
 // main chess context
 // this exposes a couple of functions and data from the chess.js library
 const ChessProvider = ({children}) => {
   const [chess] = useState(new Chess("2k5/8/8/8/8/8/1p4Q1/7K b - - 0 1"));
-  const [isPromoting, setIsPromoting] = useState(false);
+  const [pawnPromotion, setPawnPromotion] = useState(null);
 
   useEffect(() => {
-    console.log(isPromoting);
-  }, [isPromoting]);
+    console.log(pawnPromotion);
+  }, [pawnPromotion]);
 
   return (
     <ChessContext.Provider
@@ -34,8 +39,8 @@ const ChessProvider = ({children}) => {
         chess,
         getPositionFromIndex,
         getPGNCode,
-        isPromoting,
-        setIsPromoting,
+        pawnPromotion,
+        setPawnPromotion,
       }}
     >
       {children}
