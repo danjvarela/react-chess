@@ -21,7 +21,11 @@ const Chessboard = () => {
     // active.id is the piece being dragged
     // over.id is the cell currently the mouse is on
     const {over, active} = event;
-    const move = chess.move({from: active.id, to: over.id});
+
+    const move = chess.move({
+      from: active.id,
+      to: over.id,
+    });
     // if the move is valid, refresh the cells
     if (move) {
       setCells(chess.board().flat());

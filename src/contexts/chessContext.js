@@ -1,4 +1,4 @@
-import {createContext, useContext, useEffect, useState} from "react";
+import {createContext, useContext, useState} from "react";
 import {Chess} from "chess.js";
 
 const ChessContext = createContext();
@@ -22,7 +22,6 @@ const getPGNCode = (type, color) => (color === "w" ? type.toUpperCase() : type);
 // this exposes a couple of functions and data from the chess.js library
 const ChessProvider = ({children}) => {
   const [chess] = useState(new Chess());
-  const [history, setHistory] = useState(chess.history());
 
   return (
     <ChessContext.Provider
