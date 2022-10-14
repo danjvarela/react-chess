@@ -1,4 +1,4 @@
-import {createContext, useContext, useEffect, useState} from "react";
+import {createContext, useContext, useState} from "react";
 import {Chess} from "chess.js";
 
 const ChessContext = createContext();
@@ -27,7 +27,6 @@ const isAtTheBottom = (square) => square.includes("1");
 // this exposes a couple of functions and data from the chess.js library
 const ChessProvider = ({children}) => {
   const [chess] = useState(new Chess());
-  const [history, setHistory] = useState(chess.history());
   const [squares, setSquares] = useState(chess.board().flat());
   const [pawnPromotion, setPawnPromotion] = useState(null);
   const [possibleMoves, setPossibleMoves] = useState([]);
