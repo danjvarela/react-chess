@@ -26,6 +26,7 @@ const Chessboard = () => {
 
   const isPromoting = (draggedPiece, hoveredCell) => {
     if (draggedPiece.type !== "p") return false;
+    if (draggedPiece.color !== chess.turn()) return false;
     if (draggedPiece.color === "b" && isAtTheBottom(hoveredCell)) return true;
     if (draggedPiece.color === "w" && isAtTheTop(hoveredCell)) return true;
     return false;
