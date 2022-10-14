@@ -18,7 +18,7 @@ const Cell = ({isBlack, square, piece}) => {
 
   // conditional styles
   const borderWidth = isOver ? "border-4" : null;
-  const cellColor = isBlack ? "bg-yellow-800" : "bg-amber-200";
+  const cellColor = isBlack ? "bg-yellow-800" : "bg-amber-100";
   // add styling to possible moves exccept for when there is a promotion
   const backDrop =
     isPossibleMove && !pawnPromotion?.square ? `border-2 animate-pulse ` : null;
