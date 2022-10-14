@@ -25,6 +25,7 @@ const isAtTheBottom = (square) => square.includes("1");
 
 // FEN's for testing:
 // Stalemate: "8/6p1/5p2/7K/4k2P/8/8/8 b - - 0 66"
+// One move mate (black to move): "rnbqkbnr/pppp1ppp/8/4p3/5PP1/8/PPPPP2P/RNBQKBNR b KQkq g3 0 2"
 
 // main chess context
 // this exposes a couple of functions and data from the chess.js library
