@@ -13,6 +13,7 @@ const Chessboard = () => {
     isAtTheTop,
     squares,
     setSquares,
+    setPossibleMoves,
   } = useChess();
 
   // returns true if a cell should be black based on its index
@@ -57,11 +58,18 @@ const Chessboard = () => {
     if (move) {
       setSquares(chess.board().flat());
     }
+    setPossibleMoves([]);
+  };
+
+  const handleDragStart = (event) => {
+    setPossibleMoves(
+      chess.moves({square: event.active?.id, verbose: true}).map((value) => value.to)
+    );
   };
 
   return (
     <div className="grid grid-rows-8 grid-cols-8 justify-items-stretch items-stretch w-full aspect-square">
-      <DndContext onDragEnd={handleDragEnd}>
+      <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
         {squares.map((value, index) => {
           const pgnPosition = getPositionFromIndex(index);
           const {square, type, color} = value ?? {

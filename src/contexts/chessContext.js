@@ -27,8 +27,10 @@ const isAtTheBottom = (square) => square.includes("1");
 // this exposes a couple of functions and data from the chess.js library
 const ChessProvider = ({children}) => {
   const [chess] = useState(new Chess());
+  const [history, setHistory] = useState(chess.history());
   const [squares, setSquares] = useState(chess.board().flat());
   const [pawnPromotion, setPawnPromotion] = useState(null);
+  const [possibleMoves, setPossibleMoves] = useState([]);
 
   return (
     <ChessContext.Provider
@@ -36,6 +38,8 @@ const ChessProvider = ({children}) => {
         chess,
         getPositionFromIndex,
         getPGNCode,
+        setPossibleMoves,
+        possibleMoves,
         pawnPromotion,
         setPawnPromotion,
         isAtTheTop,
