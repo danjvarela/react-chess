@@ -3,7 +3,14 @@ import pieces from "./pieces";
 
 // this is the component representing each promotion option
 const PromotionOption = ({type, color}) => {
-  const {getPGNCode, chess, pawnPromotion, setPawnPromotion, setSquares} = useChess();
+  const {
+    getPGNCode,
+    chess,
+    pawnPromotion,
+    setPawnPromotion,
+    setSquares,
+    setPossibleMoves,
+  } = useChess();
   // get where the piece is coming from and where it is to be dropped
   const {from, to} = pawnPromotion ?? {};
 
@@ -16,6 +23,8 @@ const PromotionOption = ({type, color}) => {
       setSquares(chess.board().flat());
       // promotion is done. make it null
       setPawnPromotion(null);
+      // remove all possible moves since a move has already been made
+      setPossibleMoves([]);
     }
   };
 
