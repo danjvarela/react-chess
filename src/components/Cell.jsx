@@ -1,4 +1,5 @@
 import {useDroppable} from "@dnd-kit/core";
+import PawnPromotionOptions from "./PawnPromotionOptions";
 
 const Cell = ({isBlack, square, piece}) => {
   // make this cell a droppable item for the pieces
@@ -12,9 +13,10 @@ const Cell = ({isBlack, square, piece}) => {
 
   return (
     <div
-      className={`${cellColor} w-full h-full flex justify-center items-center ${borderWidth}`}
+      className={`${cellColor} w-full h-full flex justify-center items-center ${borderWidth} relative`}
       ref={setNodeRef}
     >
+      <PawnPromotionOptions square={square} />
       {piece}
     </div>
   );
