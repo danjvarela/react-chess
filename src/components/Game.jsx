@@ -2,6 +2,7 @@ import Chessboard from "components/Chessboard";
 import PlayerInfo from "./PlayerInfo";
 import {ChessProvider} from "contexts/chessContext";
 import GameOverModal from "./GameOverModal";
+import ResetButton from "./ResetButton";
 
 const Game = () => {
   return (
@@ -11,6 +12,9 @@ const Game = () => {
         <PlayerInfo name="Player1" />
         <Chessboard />
         <PlayerInfo name="Player2" />
+        <div className="flex justify-end">
+          <ResetButton />
+        </div>
       </div>
     </ChessProvider>
   );

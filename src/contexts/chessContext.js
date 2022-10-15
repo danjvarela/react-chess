@@ -26,6 +26,7 @@ const isAtTheBottom = (square) => square.includes("1");
 // FEN's for testing:
 // Stalemate: "8/6p1/5p2/7K/4k2P/8/8/8 b - - 0 66"
 // One move mate (black to move): "rnbqkbnr/pppp1ppp/8/4p3/5PP1/8/PPPPP2P/RNBQKBNR b KQkq g3 0 2"
+// Pawn Promotion: "8/PPPPPP1k/8/8/8/8/pppppp1K/8 w - - 0 1"
 
 // main chess context
 // this exposes a couple of functions and data from the chess.js library
@@ -35,6 +36,11 @@ const ChessProvider = ({children}) => {
   const [pawnPromotion, setPawnPromotion] = useState(null);
   const [possibleMoves, setPossibleMoves] = useState([]);
   const [gameOver, setGameOver] = useState(null);
+
+  const resetBoard = useCallback(() => {
+    chess.reset();
+    setSquares(chess.board().flat());
+  }, []);
 
   // gets the winner, returns null if there is none
   const getWinner = useCallback(() => {
@@ -80,6 +86,7 @@ const ChessProvider = ({children}) => {
         setSquares,
         gameOver,
         setGameOver,
+        resetBoard,
       }}
     >
       {children}

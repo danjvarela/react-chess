@@ -1,17 +1,11 @@
-import {useState, useMemo, useEffect} from "react";
-import {
-  Button,
-  Dialog,
-  DialogBody,
-  DialogFooter,
-  DialogHeader,
-  Typography,
-} from "@material-tailwind/react";
+import {useState, useMemo} from "react";
+import {Dialog, DialogBody, DialogFooter, DialogHeader} from "@material-tailwind/react";
 import {useChess} from "contexts/chessContext";
+import ResetButton from "./ResetButton";
 
 const GameOverModal = () => {
   const [open, setOpen] = useState(true);
-  const {gameOver, chess} = useChess();
+  const {gameOver, setGameOver, chess, resetBoard} = useChess();
 
   const {draw, stalemate, threefoldRepetition, insufficientMaterial, winner} = useMemo(
     () => gameOver ?? {},
@@ -46,25 +40,23 @@ const GameOverModal = () => {
     return "";
   }, [gameOver]);
 
-  const handleOpen = () => setOpen(!open);
+  const handleReset = () => {
+    setOpen(!open);
+    setGameOver(null);
+    resetBoard();
+  };
 
   return (
     <>
-      <Dialog open={open && !!gameOver} handler={handleOpen} className="bg-gray-900">
+      <Dialog
+        open={open && !!gameOver}
+        handler={() => setOpen(!open)}
+        className="bg-gray-900"
+      >
         <DialogHeader className="text-gray-100">{title}</DialogHeader>
         <DialogBody className="text-gray-200">{description}</DialogBody>
         <DialogFooter>
-          <Button
-            variant="filled"
-            color="blue-gray"
-            onClick={handleOpen}
-            className="mr-2"
-          >
-            <span>Reset Board</span>
-          </Button>
-          <Button variant="filled" color="green" onClick={handleOpen}>
-            <span>New Game</span>
-          </Button>
+          <ResetButton onClick={handleReset} />
         </DialogFooter>
       </Dialog>
     </>
