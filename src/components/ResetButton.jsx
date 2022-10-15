@@ -12,7 +12,12 @@ const ResetButton = ({onClick}) => {
   if (!gameOver) return null;
 
   return (
-    <Button variant="filled" color="green" onClick={reset || onClick} className="mr-2">
+    <Button
+      variant="filled"
+      color="green"
+      onClick={reset || onClick}
+      className="mr-2 w-full"
+    >
       <span>Reset Board</span>
     </Button>
   );
