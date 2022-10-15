@@ -22,6 +22,7 @@ const getPGNCode = (type, color) => (color === "w" ? type.toUpperCase() : type);
 // ie. e1 is at the bottom row while e8 is at the top row
 const isAtTheTop = (square) => square.includes("8");
 const isAtTheBottom = (square) => square.includes("1");
+const isAtTheLeft = (square) => square.includes("a");
 
 // main chess context
 // this exposes a couple of functions and data from the chess.js library
@@ -45,6 +46,7 @@ const ChessProvider = ({children}) => {
         isAtTheBottom,
         squares,
         setSquares,
+        isAtTheLeft,
       }}
     >
       {children}
