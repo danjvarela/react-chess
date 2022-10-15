@@ -2,7 +2,7 @@ import Game from "components/Game";
 
 const App = () => {
   return (
-    <div className="bg-zinc-900 w-full h-screen flex justify-center items-center">
+    <div className="bg-gray-900 w-full h-screen flex justify-center items-center">
       <Game />
     </div>
   );

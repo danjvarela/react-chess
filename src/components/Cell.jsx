@@ -19,7 +19,8 @@ const Cell = ({isBlack, square, piece}) => {
   // conditional styles
   const borderColor = !isOver ? "border-transparent" : "";
   const cellColor = isBlack ? "bg-yellow-700" : "bg-orange-300";
-  // add styling to possible moves exccept for when there is a promotion
+
+  // add styling to possible moves except for when there is a promotion
   const backDrop =
     isPossibleMove && !pawnPromotion?.square ? `border-white animate-pulse ` : "";
 
