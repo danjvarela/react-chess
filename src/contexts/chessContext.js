@@ -22,6 +22,7 @@ const getPGNCode = (type, color) => (color === "w" ? type.toUpperCase() : type);
 // ie. e1 is at the bottom row while e8 is at the top row
 const isAtTheTop = (square) => square.includes("8");
 const isAtTheBottom = (square) => square.includes("1");
+const isAtTheLeft = (square) => square.includes("a");
 
 // FEN's for testing:
 // Stalemate: "8/6p1/5p2/7K/4k2P/8/8/8 b - - 0 66"
@@ -80,6 +81,7 @@ const ChessProvider = ({children}) => {
         isAtTheBottom,
         squares,
         setSquares,
+        isAtTheLeft,
         gameOver,
         setGameOver,
         resetBoard,

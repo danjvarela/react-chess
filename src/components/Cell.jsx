@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import PawnPromotionOptions from "./PawnPromotionOptions";
 
 const Cell = ({isBlack, square, piece}) => {
-  const {possibleMoves, pawnPromotion} = useChess();
+  const {possibleMoves, pawnPromotion, isAtTheLeft, isAtTheBottom} = useChess();
   const [isPossibleMove, setIsPossibleMove] = useState(false);
 
   useEffect(() => {
@@ -17,19 +17,25 @@ const Cell = ({isBlack, square, piece}) => {
   });
 
   // conditional styles
-  const borderWidth = isOver ? "border-4" : null;
-  const cellColor = isBlack ? "bg-yellow-800" : "bg-amber-100";
-  // add styling to possible moves exccept for when there is a promotion
+  const borderColor = !isOver ? "border-transparent" : "";
+  const cellColor = isBlack ? "bg-yellow-700" : "bg-orange-300";
+
+  // add styling to possible moves except for when there is a promotion
   const backDrop =
-    isPossibleMove && !pawnPromotion?.square ? `border-2 animate-pulse ` : null;
+    isPossibleMove && !pawnPromotion?.square ? `border-white animate-pulse ` : "";
 
   return (
     <div
-      className={`${cellColor} w-full h-full flex justify-center items-center ${borderWidth} ${backDrop} relative`}
+      className={`${cellColor} w-full h-full flex justify-center items-center border-2 ${borderColor} ${backDrop} relative`}
       ref={setNodeRef}
     >
       <PawnPromotionOptions square={square} />
+      <span className="absolute top-0 left-0"> {isAtTheLeft(square) && square[1]} </span>
       {piece}
+      <span className="absolute bottom-0 right-0">
+        {" "}
+        {isAtTheBottom(square) && square[0]}{" "}
+      </span>
     </div>
   );
 };
