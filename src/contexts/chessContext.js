@@ -53,10 +53,6 @@ const ChessProvider = ({children}) => {
   }, [squares]);
 
   useEffect(() => {
-    console.log("gameOver: ", gameOver);
-  }, [gameOver]);
-
-  useEffect(() => {
     if (chess.isGameOver()) {
       setGameOver({
         winner: getWinner(),
