@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/react-chess/static/css/main.882abb1b.css",
+    "main.js": "/react-chess/static/js/main.2773295f.js",
+    "static/js/787.a9006cec.chunk.js": "/react-chess/static/js/787.a9006cec.chunk.js",
+    "static/media/black_rook.svg": "/react-chess/static/media/black_rook.fdc575582c2cbe2ec82093702945226f.svg",
+    "static/media/black_knight.svg": "/react-chess/static/media/black_knight.7930be9e07b51bc0e069b1d77e31261a.svg",
+    "static/media/black_king.svg": "/react-chess/static/media/black_king.6c8cc8fabe5215cc854dec67ee7781fd.svg",
+    "static/media/black_queen.svg": "/react-chess/static/media/black_queen.cf388bf415c0d33ec16f23593b8d0d91.svg",
+    "static/media/white_knight.svg": "/react-chess/static/media/white_knight.d47944d2cee4f8c707d1907706c142fa.svg",
+    "static/media/black_bishop.svg": "/react-chess/static/media/black_bishop.04932f63ef10dcdee115b649286230f5.svg",
+    "static/media/white_bishop.svg": "/react-chess/static/media/white_bishop.aa411d5809c6380713b4312d55aafc53.svg",
+    "static/media/white_rook.svg": "/react-chess/static/media/white_rook.9e48b84f189eea24339f8a679e7a664f.svg",
+    "static/media/white_queen.svg": "/react-chess/static/media/white_queen.7a1aecff0f22ff68c43f9b7f8a81d0b4.svg",
+    "index.html": "/react-chess/index.html",
+    "static/media/black_pawn.svg": "/react-chess/static/media/black_pawn.be5d44ca5ee868885d216188996e3a00.svg",
+    "static/media/white_pawn.svg": "/react-chess/static/media/white_pawn.50273cc6d86861932d0a01c38274009a.svg",
+    "static/media/white_king.svg": "/react-chess/static/media/white_king.5d58f1999749c1b5ef5bc1699c38b2f7.svg",
+    "main.882abb1b.css.map": "/react-chess/static/css/main.882abb1b.css.map",
+    "main.2773295f.js.map": "/react-chess/static/js/main.2773295f.js.map",
+    "787.a9006cec.chunk.js.map": "/react-chess/static/js/787.a9006cec.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.882abb1b.css",
+    "static/js/main.2773295f.js"
+  ]
+}
