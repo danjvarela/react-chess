@@ -1,4 +1,3 @@
-import {useState} from "react";
 import Cell from "./Cell";
 import Piece from "./Piece";
 import {DndContext} from "@dnd-kit/core";
@@ -14,6 +13,7 @@ const Chessboard = () => {
     squares,
     setSquares,
     setPossibleMoves,
+    setKingSquare,
   } = useChess();
 
   // returns true if a cell should be black based on its index
@@ -57,6 +57,10 @@ const Chessboard = () => {
     });
     // if the move is valid, refresh the cells
     if (move) {
+      // if the king is moved, update its position
+      if (draggedPiece.type === "k")
+        setKingSquare((prev) => ({...prev, [draggedPiece.color]: over.id}));
+
       setSquares(chess.board().flat());
     }
     setPossibleMoves([]);

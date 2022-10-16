@@ -37,7 +37,11 @@ const ChessProvider = ({children}) => {
   const [pawnPromotion, setPawnPromotion] = useState(null);
   const [possibleMoves, setPossibleMoves] = useState([]);
   const [gameOver, setGameOver] = useState(null);
-  const [kingSquare, setKingSquare] = useState({w: "e1", k: "e8"});
+  const [kingSquare, setKingSquare] = useState({w: "e1", b: "e8"});
+
+  useEffect(() => {
+    console.log(kingSquare);
+  }, [kingSquare]);
 
   const resetBoard = useCallback(() => {
     chess.reset();
