@@ -2,6 +2,7 @@
   "name": "react-chess",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://danjvarela.github.io/react-chess",
   "dependencies": {
     "@dnd-kit/core": "^6.0.5",
     "@material-tailwind/react": "^1.2.4",
@@ -15,6 +16,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -64,6 +67,7 @@
     "autoprefixer": "^10.4.12",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "gh-pages": "^4.0.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "postcss": "^8.4.17",
