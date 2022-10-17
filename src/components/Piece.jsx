@@ -16,13 +16,14 @@ const Piece = ({type, color, square}) => {
   // conditional styling
   const style = transform
     ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0) scale(1.25)`,
-        zIndex: 5,
+        transform: `translate3d(${transform.x}px, ${transform.y}px, 0) scale(1.15)`,
+        zIndex: 10,
         cursor: "grabbing",
       }
     : {
-        transform: "scale(1.25)",
+        transform: "scale(1.15)",
         cursor: "grab",
+        zIndex: 5,
       };
 
   return (
