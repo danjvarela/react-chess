@@ -39,6 +39,8 @@ const Chessboard = () => {
     // over.id is the cell currently the mouse is on
     const {over, active} = event;
 
+    if (!over) return;
+
     // check if a pawn promotion is occuring
     const draggedPiece = chess.get(active.id);
     if (isPromoting(draggedPiece, over.id)) {
