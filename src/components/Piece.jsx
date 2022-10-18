@@ -13,6 +13,7 @@ const Piece = ({type, color, square}) => {
     // unique identifier for this piece
     id: square,
   });
+
   // conditional styling
   const style = transform
     ? {

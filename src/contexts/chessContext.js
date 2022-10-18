@@ -39,10 +39,6 @@ const ChessProvider = ({children}) => {
   const [gameOver, setGameOver] = useState(null);
   const [kingSquare, setKingSquare] = useState({w: "e1", b: "e8"});
 
-  useEffect(() => {
-    console.log(kingSquare);
-  }, [kingSquare]);
-
   const resetBoard = useCallback(() => {
     chess.reset();
     setSquares(chess.board().flat());

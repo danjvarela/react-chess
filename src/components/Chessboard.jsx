@@ -2,6 +2,7 @@ import Cell from "./Cell";
 import Piece from "./Piece";
 import {DndContext} from "@dnd-kit/core";
 import {useChess} from "contexts/chessContext";
+import {snapCenterToCursor} from "lib/dnd-kit/modifiers";
 
 const Chessboard = () => {
   const {
@@ -37,6 +38,8 @@ const Chessboard = () => {
     // active.id is the piece being dragged
     // over.id is the cell currently the mouse is on
     const {over, active} = event;
+
+    if (!over) return;
 
     // check if a pawn promotion is occuring
     const draggedPiece = chess.get(active.id);
@@ -74,7 +77,11 @@ const Chessboard = () => {
 
   return (
     <div className="grid grid-rows-8 grid-cols-8 justify-items-stretch items-stretch w-full aspect-square">
-      <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
+      <DndContext
+        onDragEnd={handleDragEnd}
+        onDragStart={handleDragStart}
+        modifiers={[snapCenterToCursor]}
+      >
         {squares.map((value, index) => {
           const pgnPosition = getPositionFromIndex(index);
           const {square, type, color} = value ?? {
