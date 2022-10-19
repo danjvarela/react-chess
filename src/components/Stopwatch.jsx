@@ -1,16 +1,18 @@
+import {Typography} from "@material-tailwind/react";
 import {useChess} from "contexts/chessContext";
-// import {useCountdown} from "hooks/useCountdown";
-import {useEffect, useState} from "react";
+import {useEffect, useMemo} from "react";
 
 const getMinutes = (time) => Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
 const getSeconds = (time) => Math.floor((time % (1000 * 60)) / 1000);
 
 const Stopwatch = ({color}) => {
   const {chess, playerRemainingTime, setPlayerRemainingTime} = useChess();
-  // const [minutes, seconds] = useCountdown(playerRemainingTime[color]);
-  // const remainingTime = useMemo(() => {
-  //   const time = playerRemainingTime - new Date().getTime();
-  // }, [playerRemainingTime]);
+
+  const {minutes, seconds} = useMemo(() => {
+    const minutes = getMinutes(playerRemainingTime[color]);
+    const seconds = String(getSeconds(playerRemainingTime[color])).padStart(2, "0");
+    return {minutes, seconds};
+  }, [playerRemainingTime, color]);
 
   useEffect(() => {
     if (chess.turn() === color) {
@@ -19,34 +21,18 @@ const Stopwatch = ({color}) => {
           ...prevTime,
           [color]: prevTime[color] - 1000,
         }));
-        console.log(playerRemainingTime);
       }, 1000);
       return () => clearTimeout(id);
     }
-    return () => {};
-    // const time = playerRemainingTime[color] - new Date().getTime();
-    // const minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
-    // const seconds = Math.floor((time % (1000 * 60)) / 1000);
-    // console.log("minutes", minutes);
-    // console.log("seconds", seconds);
   }, [playerRemainingTime]);
 
+  const turnStyle =
+    chess.turn() === color ? "text-gray-900 bg-gray-100" : "text-gray-700 bg-gray-800";
+
   return (
-    <div
-      className={`${
-        chess.turn() === color ? "text-red-500" : ""
-      } prose prose-zinc dark:prose-invert prose-2xl bg-zinc-800 px-5 rounded-md`}
-    >
-      {/* {playerRemainingTime */}
-      {/*   ? minutes + seconds <= 0 */}
-      {/*     ? "0:00" */}
-      {/*     : `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}` */}
-      {/*   : "1:45"} */}
-      {/* {minutes + seconds <= 0 && Object.assign(chess.turn(), piece)} */}
-      {`${getMinutes(playerRemainingTime[color])}:${getSeconds(
-        playerRemainingTime[color]
-      )}`}
-    </div>
+    <Typography className={`${turnStyle} px-5 rounded-md`} variant="h4">
+      {`${minutes}:${seconds}`}
+    </Typography>
   );
 };
 

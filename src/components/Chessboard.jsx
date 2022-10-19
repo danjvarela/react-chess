@@ -3,6 +3,15 @@ import Piece from "./Piece";
 import {DndContext} from "@dnd-kit/core";
 import {useChess} from "contexts/chessContext";
 import {snapCenterToCursor} from "lib/dnd-kit/modifiers";
+import {useCallback} from "react";
+
+// returns true if a cell should be black based on its index
+// index is 0 - 63
+const isBlack = (index) => {
+  const col = index % 8;
+  const row = Math.floor(index / 8);
+  return (col + row) % 2 === 1;
+};
 
 const Chessboard = () => {
   const {
@@ -17,22 +26,16 @@ const Chessboard = () => {
     setKingSquare,
   } = useChess();
 
-  // returns true if a cell should be black based on its index
-  // index is 0 - 63
-  const isBlack = (index) => {
-    const col = index % 8;
-    const row = Math.floor(index / 8);
-    return (col + row) % 2 === 1;
-  };
-
-  const isPromoting = (draggedPiece, hoveredCell) => {
-    if (draggedPiece.type !== "p") return false;
-    if (draggedPiece.color !== chess.turn()) return false;
-    if (draggedPiece.color === "b" && isAtTheBottom(hoveredCell)) return true;
-    if (draggedPiece.color === "w" && isAtTheTop(hoveredCell)) return true;
-    return false;
-  };
-
+  const isPromoting = useCallback(
+    (draggedPiece, hoveredCell) => {
+      if (draggedPiece.type !== "p") return false;
+      if (draggedPiece.color !== chess.turn()) return false;
+      if (draggedPiece.color === "b" && isAtTheBottom(hoveredCell)) return true;
+      if (draggedPiece.color === "w" && isAtTheTop(hoveredCell)) return true;
+      return false;
+    },
+    [chess.turn()]
+  );
   // handles dropping of pieces
   const handleDragEnd = (event) => {
     // active.id is the piece being dragged
