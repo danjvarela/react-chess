@@ -9,9 +9,9 @@ const Game = () => {
     <ChessProvider>
       <div className="w-11/12 md:w-4/5 max-w-lg h-auto flex flex-col gap-3">
         <GameOverModal />
-        <PlayerInfo name="Player1" />
+        <PlayerInfo name="Player1" color="b" />
         <Chessboard />
-        <PlayerInfo name="Player2" />
+        <PlayerInfo name="Player2" color="w" />
         <div className="flex justify-end">
           <ResetButton />
         </div>

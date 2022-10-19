@@ -1,9 +1,8 @@
-import Stopwatch from "./Stopwatch";
 import Player from "./Player";
 import {useChess} from "contexts/chessContext";
-import {useEffect} from "react";
+import Stopwatch from "./Stopwatch";
 
-const PlayerInfo = ({name}) => {
+const PlayerInfo = ({name, color}) => {
   const {chess} = useChess();
 
   const unicodes = {
@@ -21,23 +20,20 @@ const PlayerInfo = ({name}) => {
     p: "\u265F",
   };
 
-  const currentTime = new Date().getTime();
-  const targetTime = currentTime + 105000;
-
   return (
     <>
       <div className="flex justify-between items-start">
         <div className="flex-col justify-center item-start">
           <Player name={name} />
           <div className="captured-pieces text-3xl flex">
-            {name === "Player2" &&
+            {color === "w" &&
               chess
                 .history({verbose: true})
                 .map(({captured, color, san}) =>
                   color === "w" ? <div key={san}>{unicodes[captured]}</div> : null
                 )}
 
-            {name === "Player1" &&
+            {color === "b" &&
               chess.history({verbose: true}).map(({captured, color, san}) =>
                 color === "b" ? (
                   <div className="text-white" key={san}>
@@ -47,18 +43,7 @@ const PlayerInfo = ({name}) => {
               )}
           </div>
         </div>
-        {name === "Player1" && chess.turn() === "b" && (
-          <Stopwatch
-            targetTime={targetTime} //piece="w"
-          />
-        )}
-        {name === "Player2" && chess.turn() !== "w" && <Stopwatch />}
-        {name === "Player2" && chess.turn() === "w" && (
-          <Stopwatch
-            targetTime={targetTime} //piece="b"
-          />
-        )}
-        {name === "Player1" && chess.turn() !== "b" && <Stopwatch />}
+        <Stopwatch color={color} />
       </div>
     </>
   );
