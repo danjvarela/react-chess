@@ -1,6 +1,7 @@
 import Stopwatch from "./Stopwatch";
 import Player from "./Player";
 import {useChess} from "contexts/chessContext";
+import {useEffect} from "react";
 
 const PlayerInfo = ({name}) => {
   const {chess} = useChess();
@@ -19,6 +20,9 @@ const PlayerInfo = ({name}) => {
     P: "\u2659",
     p: "\u265F",
   };
+
+  const currentTime = new Date().getTime();
+  const targetTime = currentTime + 105000;
 
   return (
     <>
@@ -43,7 +47,18 @@ const PlayerInfo = ({name}) => {
               )}
           </div>
         </div>
-        <Stopwatch />
+        {name === "Player1" && chess.turn() === "b" && (
+          <Stopwatch
+            targetTime={targetTime} //piece="w"
+          />
+        )}
+        {name === "Player2" && chess.turn() !== "w" && <Stopwatch />}
+        {name === "Player2" && chess.turn() === "w" && (
+          <Stopwatch
+            targetTime={targetTime} //piece="b"
+          />
+        )}
+        {name === "Player1" && chess.turn() !== "b" && <Stopwatch />}
       </div>
     </>
   );
