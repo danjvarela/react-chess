@@ -24,7 +24,7 @@ const Stopwatch = ({color}) => {
       }, 1000);
       return () => clearTimeout(id);
     }
-  }, [playerRemainingTime]);
+  }, [playerRemainingTime, color]);
 
   const turnStyle =
     chess.turn() === color ? "text-gray-900 bg-gray-100" : "text-gray-700 bg-gray-800";

@@ -1,13 +1,10 @@
 import {useDraggable} from "@dnd-kit/core";
-import {useChess} from "contexts/chessContext";
-import pieces from "./pieces";
+import PieceRenderer from "./PieceRenderer";
 
 // type can be one of r, b, n, k, q, p (lowercase)
 // color can be w or b
 // square is the position of the piece, ie. e4, f6, h1 ...
 const Piece = ({type, color, square}) => {
-  const {getPGNCode} = useChess();
-
   // make this piece a draggable item
   const {attributes, listeners, setNodeRef, transform} = useDraggable({
     // unique identifier for this piece
@@ -28,7 +25,7 @@ const Piece = ({type, color, square}) => {
 
   return (
     <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
-      {pieces[getPGNCode(type, color)] ?? null}
+      <PieceRenderer type={type} color={color} />
     </div>
   );
 };
