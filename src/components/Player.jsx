@@ -1,5 +1,11 @@
+import {Typography} from "@material-tailwind/react";
+
 const Player = ({name}) => {
-  return <div className="prose prose-zinc dark:prose-invert prose-md">{name}</div>;
+  return (
+    <Typography variant="h6" className="text-gray-300">
+      {name}
+    </Typography>
+  );
 };
 
 export default Player;
