@@ -1,24 +1,27 @@
 import Player from "./Player";
 import {useChess} from "contexts/chessContext";
 import Stopwatch from "./Stopwatch";
+import CapturedPiece from "./CapturedPiece";
+import {useMemo} from "react";
 
 const PlayerInfo = ({name, color}) => {
-  const {chess} = useChess();
+  const {chess, history} = useChess();
 
-  const unicodes = {
-    K: "\u2654",
-    k: "\u2655",
-    Q: "\u2655",
-    q: "\u265B",
-    R: "\u2656",
-    r: "\u265C",
-    B: "\u2657",
-    b: "\u265D",
-    N: "\u2658",
-    n: "\u265E",
-    P: "\u2659",
-    p: "\u265F",
-  };
+  const capturedPieces = useMemo(() => {
+    const history = chess.history({verbose: true});
+
+    const pieces = history
+      .filter((move) => move.captured) // filter all moves that involves a capture
+      .reduce(
+        // transform it into {w: [black captured pieces], b: [white captured pieces]}
+        (acc, move) => {
+          acc[move.color] = [...acc[move.color], move.captured];
+          return acc;
+        },
+        {w: [], b: []}
+      );
+    return pieces;
+  }, [history]);
 
   return (
     <>
@@ -26,21 +29,13 @@ const PlayerInfo = ({name, color}) => {
         <div className="flex-col justify-center item-start">
           <Player name={name} />
           <div className="captured-pieces text-3xl flex">
-            {color === "w" &&
-              chess
-                .history({verbose: true})
-                .map(({captured, color, san}) =>
-                  color === "w" ? <div key={san}>{unicodes[captured]}</div> : null
-                )}
-
-            {color === "b" &&
-              chess.history({verbose: true}).map(({captured, color, san}) =>
-                color === "b" ? (
-                  <div className="text-white" key={san}>
-                    {unicodes[captured?.toUpperCase()]}
-                  </div>
-                ) : null
-              )}
+            {capturedPieces[color].map((piece, index) => (
+              <CapturedPiece
+                type={piece}
+                color={color === "w" ? "b" : "w"}
+                key={`captured-${color}-${index}`}
+              />
+            ))}
           </div>
         </div>
         <Stopwatch color={color} />

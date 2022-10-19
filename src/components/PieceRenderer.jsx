@@ -20,7 +20,7 @@ const pieces = {
   P: (props) => <Pawn color="w" {...props} />,
 };
 
-const PieceRenderer = ({type, color, props}) => {
+const PieceRenderer = ({type, color, ...props}) => {
   if (!type || !color) return null;
   const Piece = pieces[color === "w" ? type.toUpperCase() : type];
   return <Piece {...(props ?? {})} />;

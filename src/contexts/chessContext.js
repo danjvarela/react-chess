@@ -39,6 +39,7 @@ const ChessProvider = ({children}) => {
   const [gameOver, setGameOver] = useState(null);
   const [kingSquare, setKingSquare] = useState({w: "e1", b: "e8"});
   const [playerRemainingTime, setPlayerRemainingTime] = useState({w: 105000, b: 105000});
+  const [history, setHistory] = useState(chess.history({verbose: true}));
 
   const resetBoard = useCallback(() => {
     chess.reset();
@@ -56,6 +57,7 @@ const ChessProvider = ({children}) => {
   }, [squares]);
 
   useEffect(() => {
+    setHistory(chess.history({verbose: true}));
     if (chess.isGameOver()) {
       setGameOver({
         winner: getWinner(),
@@ -91,6 +93,8 @@ const ChessProvider = ({children}) => {
         setKingSquare,
         playerRemainingTime,
         setPlayerRemainingTime,
+        history,
+        setHistory,
       }}
     >
       {children}
