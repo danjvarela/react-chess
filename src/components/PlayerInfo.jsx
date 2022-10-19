@@ -1,8 +1,8 @@
 import Player from "./Player";
 import {useChess} from "contexts/chessContext";
 import Stopwatch from "./Stopwatch";
-import CapturedPiece from "./CapturedPiece";
 import {useMemo} from "react";
+import CapturedPieceGroup from "./CapturedPieceGroup";
 
 const PlayerInfo = ({name, color}) => {
   const {chess, history} = useChess();
@@ -28,15 +28,18 @@ const PlayerInfo = ({name, color}) => {
       <div className="flex justify-between items-start">
         <div className="flex-col justify-center item-start">
           <Player name={name} />
-          <div className="captured-pieces text-3xl flex">
-            {capturedPieces[color].map((piece, index) => (
-              <CapturedPiece
-                type={piece}
-                color={color === "w" ? "b" : "w"}
-                key={`captured-${color}-${index}`}
-              />
-            ))}
-          </div>
+          {capturedPieces[color].length !== 0 ? (
+            <div className="flex">
+              {["p", "b", "n", "r", "q"].map((val) => (
+                <CapturedPieceGroup
+                  type={val}
+                  color={color}
+                  capturedPieces={capturedPieces[color]}
+                  key={`captured-group-${val}`}
+                />
+              ))}
+            </div>
+          ) : null}
         </div>
         <Stopwatch color={color} />
       </div>

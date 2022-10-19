@@ -25,7 +25,7 @@ const Piece = ({type, color, square}) => {
 
   return (
     <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
-      <PieceRenderer type={type} color={color} />
+      <PieceRenderer type={type} color={color} width={45} height={45} />
     </div>
   );
 };
