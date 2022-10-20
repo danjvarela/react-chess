@@ -1,37 +1,54 @@
+import {Typography} from "@material-tailwind/react";
 import {useChess} from "contexts/chessContext";
-import {useEffect, useState} from "react";
+import {useEffect, useMemo} from "react";
+
 
 const getMinutes = (time) => Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
 const getSeconds = (time) => Math.floor((time % (1000 * 60)) / 1000);
 
 const Stopwatch = ({color}) => {
-  const {chess, playerRemainingTime, setPlayerRemainingTime} = useChess();
-  const playerCurrentMinutes = getMinutes(playerRemainingTime[color]);
-  const playerCurrentSeconds = getSeconds(playerRemainingTime[color]);
+  const {chess, stopGame, playerRemainingTime, setPlayerRemainingTime, gameOver} =
+    useChess();
+
+  const {minutes, seconds} = useMemo(() => {
+    if (!playerRemainingTime) return {};
+    const minutes = getMinutes(playerRemainingTime[color]);
+    const seconds = getSeconds(playerRemainingTime[color]);
+    return {minutes, seconds};
+  }, [playerRemainingTime]);
+
 
   useEffect(() => {
-    if (chess.turn() === color) {
+    if (chess.turn() === color && playerRemainingTime && gameOver === null) {
       const id = setTimeout(() => {
         setPlayerRemainingTime((prevTime) => ({
           ...prevTime,
-          [color]: prevTime[color] - 1000,
+          [color]: prevTime[color] - 100,
         }));
-      }, 1000);
+      }, 100);
       return () => clearTimeout(id);
     }
-    return () => {};
-  }, [playerRemainingTime]);
+  });
 
+  useEffect(() => {
+    if (minutes <= 0 && seconds <= 0) {
+      setPlayerRemainingTime((prevTime) => ({
+        ...prevTime,
+        [color]: 0,
+      }));
+      stopGame();
+    }
+  }, [minutes, seconds]);
+
+  const turnStyle =
+    chess.turn() === color ? "text-gray-900 bg-gray-100" : "text-gray-700 bg-gray-800";
+
+
+  if (!playerRemainingTime) return null;
   return (
-    <div
-      className={`${
-        chess.turn() === color ? "text-cyan-600 animate-pulse" : ""
-      } prose prose-zinc dark:prose-invert prose-2xl bg-zinc-800 px-5 rounded-md`}
-    >
-      {`${
-        playerCurrentMinutes < 10 ? `0${playerCurrentMinutes}` : playerCurrentMinutes
-      }:${playerCurrentSeconds < 10 ? `0${playerCurrentSeconds}` : playerCurrentSeconds}`}
-    </div>
+    <Typography className={`${turnStyle} px-5 rounded-md`} variant="h4">
+      {`${minutes}:${String(seconds).padStart(2, "0")}`}
+    </Typography>
   );
 };
 

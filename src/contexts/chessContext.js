@@ -24,6 +24,8 @@ const isAtTheTop = (square) => square.includes("8");
 const isAtTheBottom = (square) => square.includes("1");
 const isAtTheLeft = (square) => square.includes("a");
 
+const otherPlayer = (player) => (player === "w" ? "b" : "w");
+
 // FEN's for testing:
 // Stalemate: "8/6p1/5p2/7K/4k2P/8/8/8 b - - 0 66"
 // One move mate (black to move): "rnbqkbnr/pppp1ppp/8/4p3/5PP1/8/PPPPP2P/RNBQKBNR b KQkq g3 0 2"
@@ -38,36 +40,56 @@ const ChessProvider = ({children}) => {
   const [possibleMoves, setPossibleMoves] = useState([]);
   const [gameOver, setGameOver] = useState(null);
   const [kingSquare, setKingSquare] = useState({w: "e1", b: "e8"});
-  const [playerRemainingTime, setPlayerRemainingTime] = useState({w: 600000, b: 600000});
+  const [playerRemainingTime, setPlayerRemainingTime] = useState(null);
+  const [history, setHistory] = useState(chess.history({verbose: true}));
 
   const resetBoard = useCallback(() => {
+    setPlayerRemainingTime(null);
+    setGameOver(null);
     chess.reset();
     setSquares(chess.board().flat());
   }, []);
 
+  const timeRanOut = () => {
+    if (playerRemainingTime === null) return false;
+    const {w: whiteTime, b: blackTime} = playerRemainingTime;
+    if (whiteTime <= 0) return "w";
+    if (blackTime <= 0) return "b";
+    return false;
+  };
+
   // gets the winner, returns null if there is none
-  const getWinner = useCallback(() => {
-    // game is not yet over
-    if (!chess.isGameOver()) return null;
+  const getWinner = () => {
     // game is over but it is a draw
     if (chess.isDraw()) return null;
     // one of the players is checkmated
-    return chess.turn() === "w" ? "b" : "w";
+    if (chess.isCheckmate()) return otherPlayer(chess.turn());
+    // one of the players ran out of time
+    if (timeRanOut()) return otherPlayer(timeRanOut());
+    return null;
+  };
+
+  const stopGame = () => {
+    setGameOver({
+      winner: getWinner(),
+      gameOver: true,
+      checkmate: chess.isCheckmate(),
+      threefoldRepetition: chess.isThreefoldRepetition(),
+      stalemate: chess.isStalemate(),
+      draw: chess.isDraw(),
+      insufficientMaterial: chess.isInsufficientMaterial(),
+      timeRanOut: timeRanOut(),
+    });
+  };
+
+  useEffect(() => {
+    setHistory(chess.history({verbose: true}));
+    if (chess.isGameOver()) stopGame();
   }, [squares]);
 
   useEffect(() => {
-    if (chess.isGameOver()) {
-      setGameOver({
-        winner: getWinner(),
-        gameOver: true,
-        checkmate: chess.isCheckmate(),
-        threefoldRepetition: chess.isThreefoldRepetition(),
-        stalemate: chess.isStalemate(),
-        draw: chess.isDraw(),
-        insufficientMaterial: chess.isInsufficientMaterial(),
-      });
-    }
-  }, [squares]);
+    if (timeRanOut()) stopGame();
+  }, [playerRemainingTime]);
 
   return (
     <ChessContext.Provider
@@ -91,6 +113,10 @@ const ChessProvider = ({children}) => {
         setKingSquare,
         playerRemainingTime,
         setPlayerRemainingTime,
+        history,
+        setHistory,
+        otherPlayer,
+        stopGame,
       }}
     >
       {children}

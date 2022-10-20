@@ -1,16 +1,10 @@
 import {useChess} from "contexts/chessContext";
-import pieces from "./pieces";
+import PieceRenderer from "./PieceRenderer";
 
 // this is the component representing each promotion option
 const PromotionOption = ({type, color}) => {
-  const {
-    getPGNCode,
-    chess,
-    pawnPromotion,
-    setPawnPromotion,
-    setSquares,
-    setPossibleMoves,
-  } = useChess();
+  const {chess, pawnPromotion, setPawnPromotion, setSquares, setPossibleMoves} =
+    useChess();
   // get where the piece is coming from and where it is to be dropped
   const {from, to} = pawnPromotion ?? {};
 
@@ -31,7 +25,7 @@ const PromotionOption = ({type, color}) => {
   return (
     <div className="w-full aspect-square bg-white flex justify-center items-center hover:bg-gray-300">
       <div className="scale-125 cursor-pointer" onClick={makePromotion}>
-        {pieces[getPGNCode(type, color)] ?? null}
+        <PieceRenderer type={type} color={color} />
       </div>
     </div>
   );
