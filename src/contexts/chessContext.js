@@ -57,18 +57,16 @@ const ChessProvider = ({children}) => {
     setSquares(chess.board().flat());
   }, []);
 
-  const timeRanOut = useCallback(() => {
+  const timeRanOut = () => {
     if (playerRemainingTime === null) return false;
     const {w: whiteTime, b: blackTime} = playerRemainingTime;
     if (whiteTime <= 0) return "w";
     if (blackTime <= 0) return "b";
     return false;
-  }, [playerRemainingTime]);
+  };
 
   // gets the winner, returns null if there is none
-  const getWinner = useCallback(() => {
-    // game is not yet over
-    if (gameOver === null) return null;
+  const getWinner = () => {
     // game is over but it is a draw
     if (chess.isDraw()) return null;
     // one of the players is checkmated
@@ -76,9 +74,9 @@ const ChessProvider = ({children}) => {
     // one of the players ran out of time
     if (timeRanOut()) return otherPlayer(timeRanOut());
     return null;
-  }, [squares, playerRemainingTime]);
+  };
 
-  const stopGame = useCallback(() => {
+  const stopGame = () => {
     setGameOver({
       winner: getWinner(),
       gameOver: true,
@@ -89,7 +87,11 @@ const ChessProvider = ({children}) => {
       insufficientMaterial: chess.isInsufficientMaterial(),
       timeRanOut: timeRanOut(),
     });
-  }, [squares, playerRemainingTime]);
+  };
+
+  useEffect(() => {
+    console.log(gameOver);
+  }, [gameOver]);
 
   useEffect(() => {
     setHistory(chess.history({verbose: true}));
