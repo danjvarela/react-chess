@@ -13,7 +13,10 @@ const Piece = ({type, color, square}) => {
     id: square,
   });
 
-  const enableDrag = {pointerEvents: !playerRemainingTime ? "none" : "auto"};
+  const enableDrag = {
+    pointerEvents: !playerRemainingTime ? "none" : "auto",
+    userSelect: "none",
+  };
 
   // conditional styling
   const style = transform

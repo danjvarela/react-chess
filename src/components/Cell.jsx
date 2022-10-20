@@ -21,11 +21,11 @@ const Cell = ({isBlack, square, piece}) => {
     >
       <PhantomCell square={square} isOver={isOver} />
       <PawnPromotionOptions square={square} />
-      <Typography className="absolute top-0 left-1" variant="h6">
+      <Typography className="absolute top-0 left-1 select-none" variant="h6">
         {isAtTheLeft(square) && square[1]}
       </Typography>
       {piece}
-      <Typography className="absolute bottom-0 right-1" variant="h6">
+      <Typography className="absolute bottom-0 right-1 select-none" variant="h6">
         {isAtTheBottom(square) && square[0]}
       </Typography>
     </div>
