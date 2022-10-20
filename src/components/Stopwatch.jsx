@@ -21,9 +21,9 @@ const Stopwatch = ({color}) => {
       const id = setTimeout(() => {
         setPlayerRemainingTime((prevTime) => ({
           ...prevTime,
-          [color]: prevTime[color] - 1000,
+          [color]: prevTime[color] - 100,
         }));
-      }, 1000);
+      }, 100);
       return () => clearTimeout(id);
     }
   });
