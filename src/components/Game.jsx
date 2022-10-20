@@ -10,9 +10,9 @@ const Game = () => {
       <div className="w-11/12 md:w-4/5 max-w-lg h-auto flex flex-col gap-3 relative">
         <GameMenu />
         <GameOverModal />
-        <PlayerInfo name="Player1" color="b" />
+        <PlayerInfo name="Black" color="b" />
         <Chessboard />
-        <PlayerInfo name="Player2" color="w" />
+        <PlayerInfo name="White" color="w" />
       </div>
     </ChessProvider>
   );
