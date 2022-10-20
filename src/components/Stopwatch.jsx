@@ -16,7 +16,7 @@ const Stopwatch = ({color}) => {
   }, [playerRemainingTime, color]);
 
   useEffect(() => {
-    if (chess.turn() === color && playerRemainingTime && !gameOver) {
+    if (chess.turn() === color && playerRemainingTime && gameOver === null) {
       const id = setTimeout(() => {
         setPlayerRemainingTime((prevTime) => ({
           ...prevTime,
