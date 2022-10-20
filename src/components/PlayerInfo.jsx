@@ -1,8 +1,8 @@
-import Stopwatch from "./Stopwatch";
 import Player from "./Player";
 import {useChess} from "contexts/chessContext";
+import Stopwatch from "./Stopwatch";
 
-const PlayerInfo = ({name}) => {
+const PlayerInfo = ({name, color}) => {
   const {chess} = useChess();
 
   const unicodes = {
@@ -26,14 +26,14 @@ const PlayerInfo = ({name}) => {
         <div className="flex-col justify-center item-start">
           <Player name={name} />
           <div className="captured-pieces text-3xl flex">
-            {name === "Player2" &&
+            {color === "w" &&
               chess
                 .history({verbose: true})
                 .map(({captured, color, san}) =>
                   color === "w" ? <div key={san}>{unicodes[captured]}</div> : null
                 )}
 
-            {name === "Player1" &&
+            {color === "b" &&
               chess.history({verbose: true}).map(({captured, color, san}) =>
                 color === "b" ? (
                   <div className="text-white" key={san}>
@@ -43,7 +43,7 @@ const PlayerInfo = ({name}) => {
               )}
           </div>
         </div>
-        <Stopwatch />
+        <Stopwatch color={color} />
       </div>
     </>
   );
