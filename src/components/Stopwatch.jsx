@@ -2,6 +2,7 @@ import {Typography} from "@material-tailwind/react";
 import {useChess} from "contexts/chessContext";
 import {useEffect, useMemo} from "react";
 
+
 const getMinutes = (time) => Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
 const getSeconds = (time) => Math.floor((time % (1000 * 60)) / 1000);
 
@@ -15,6 +16,7 @@ const Stopwatch = ({color}) => {
     const seconds = getSeconds(playerRemainingTime[color]);
     return {minutes, seconds};
   }, [playerRemainingTime]);
+
 
   useEffect(() => {
     if (chess.turn() === color && playerRemainingTime && gameOver === null) {
@@ -40,6 +42,7 @@ const Stopwatch = ({color}) => {
 
   const turnStyle =
     chess.turn() === color ? "text-gray-900 bg-gray-100" : "text-gray-700 bg-gray-800";
+
 
   if (!playerRemainingTime) return null;
   return (
