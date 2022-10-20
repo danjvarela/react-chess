@@ -38,7 +38,7 @@ const ChessProvider = ({children}) => {
   const [possibleMoves, setPossibleMoves] = useState([]);
   const [gameOver, setGameOver] = useState(null);
   const [kingSquare, setKingSquare] = useState({w: "e1", b: "e8"});
-  const [playerRemainingTime, setPlayerRemainingTime] = useState({w: 105000, b: 105000});
+  const [playerRemainingTime, setPlayerRemainingTime] = useState({w: 600000, b: 600000});
 
   const resetBoard = useCallback(() => {
     chess.reset();
