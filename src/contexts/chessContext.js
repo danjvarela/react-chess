@@ -90,10 +90,6 @@ const ChessProvider = ({children}) => {
   };
 
   useEffect(() => {
-    console.log(gameOver);
-  }, [gameOver]);
-
-  useEffect(() => {
     setHistory(chess.history({verbose: true}));
     if (chess.isGameOver()) stopGame();
   }, [squares]);
