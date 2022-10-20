@@ -16,6 +16,7 @@ const GameOverModal = () => {
   );
 
   const winningPlayer = useMemo(() => (winner === "w" ? "White" : "Black"), [winner]);
+  const losingPlayer = useMemo(() => (winner === "w" ? "Black" : "White"), [winner]);
 
   const title = useMemo(() => {
     if (draw) return "Draw!";
@@ -33,8 +34,8 @@ const GameOverModal = () => {
       return "";
     }
     if (winner) {
-      if (timeRanOut) return `${currentPlayer} ran out of time.`;
-      return `${winningPlayer} checkmated ${currentPlayer}`;
+      if (timeRanOut) return `${losingPlayer} ran out of time.`;
+      return `${winningPlayer} checkmated ${losingPlayer}`;
     }
     return "";
   }, [gameOver]);

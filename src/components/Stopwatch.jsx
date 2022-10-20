@@ -6,12 +6,13 @@ const getMinutes = (time) => Math.floor((time % (1000 * 60 * 60)) / (1000 * 60))
 const getSeconds = (time) => Math.floor((time % (1000 * 60)) / 1000);
 
 const Stopwatch = ({color}) => {
-  const {chess, playerRemainingTime, setPlayerRemainingTime, gameOver} = useChess();
+  const {chess, stopGame, playerRemainingTime, setPlayerRemainingTime, gameOver} =
+    useChess();
 
   const {minutes, seconds} = useMemo(() => {
     if (!playerRemainingTime) return {};
     const minutes = getMinutes(playerRemainingTime[color]);
-    const seconds = String(getSeconds(playerRemainingTime[color])).padStart(2, "0");
+    const seconds = getSeconds(playerRemainingTime[color]);
     return {minutes, seconds};
   }, [playerRemainingTime, color]);
 
@@ -28,11 +29,13 @@ const Stopwatch = ({color}) => {
   }, [playerRemainingTime, color]);
 
   useEffect(() => {
-    if (minutes <= 0 && seconds <= 0)
+    if (minutes <= 0 && seconds <= 0) {
       setPlayerRemainingTime((prevTime) => ({
         ...prevTime,
         [color]: 0,
       }));
+      stopGame();
+    }
   }, [minutes, seconds]);
 
   const turnStyle =
@@ -41,7 +44,7 @@ const Stopwatch = ({color}) => {
   if (!playerRemainingTime) return null;
   return (
     <Typography className={`${turnStyle} px-5 rounded-md`} variant="h4">
-      {`${minutes}:${seconds}`}
+      {`${minutes}:${String(seconds).padStart(2, "0")}`}
     </Typography>
   );
 };

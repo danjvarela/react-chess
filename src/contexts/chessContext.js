@@ -125,6 +125,7 @@ const ChessProvider = ({children}) => {
         history,
         setHistory,
         otherPlayer,
+        stopGame,
       }}
     >
       {children}
