@@ -21,6 +21,7 @@ const StartGameMenu = () => {
         <Button {...styles}>Start Game</Button>
       </MenuHandler>
       <MenuList>
+        <MenuItem onClick={startGame((1 / 6) * oneMinute)}>10 seconds</MenuItem>
         <MenuItem onClick={startGame(10 * oneMinute)}>10 mins</MenuItem>
         <MenuItem onClick={startGame(15 * oneMinute)}>15 mins</MenuItem>
         <MenuItem onClick={startGame(30 * oneMinute)}>30 mins</MenuItem>

@@ -7,10 +7,8 @@ const GameOverModal = () => {
   const [open, setOpen] = useState(true);
   const {gameOver, setGameOver, chess, resetBoard} = useChess();
 
-  const {draw, stalemate, threefoldRepetition, insufficientMaterial, winner} = useMemo(
-    () => gameOver ?? {},
-    [gameOver]
-  );
+  const {draw, stalemate, threefoldRepetition, insufficientMaterial, winner, timeRanOut} =
+    useMemo(() => gameOver ?? {}, [gameOver]);
 
   const currentPlayer = useMemo(
     () => (chess.turn() === "w" ? "White" : "Black"),
@@ -35,6 +33,7 @@ const GameOverModal = () => {
       return "";
     }
     if (winner) {
+      if (timeRanOut) return `${currentPlayer} ran out of time.`;
       return `${winningPlayer} checkmated ${currentPlayer}`;
     }
     return "";

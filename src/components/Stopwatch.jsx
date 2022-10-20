@@ -9,7 +9,7 @@ const Stopwatch = ({color}) => {
   const {chess, playerRemainingTime, setPlayerRemainingTime, gameOver} = useChess();
 
   const {minutes, seconds} = useMemo(() => {
-    if (!playerRemainingTime) return {minutes: 0, seconds: 0};
+    if (!playerRemainingTime) return {};
     const minutes = getMinutes(playerRemainingTime[color]);
     const seconds = String(getSeconds(playerRemainingTime[color])).padStart(2, "0");
     return {minutes, seconds};
@@ -26,6 +26,14 @@ const Stopwatch = ({color}) => {
       return () => clearTimeout(id);
     }
   }, [playerRemainingTime, color]);
+
+  useEffect(() => {
+    if (minutes <= 0 && seconds <= 0)
+      setPlayerRemainingTime((prevTime) => ({
+        ...prevTime,
+        [color]: 0,
+      }));
+  }, [minutes, seconds]);
 
   const turnStyle =
     chess.turn() === color ? "text-gray-900 bg-gray-100" : "text-gray-700 bg-gray-800";
