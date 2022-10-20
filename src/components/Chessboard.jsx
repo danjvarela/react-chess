@@ -24,6 +24,7 @@ const Chessboard = () => {
     setSquares,
     setPossibleMoves,
     setKingSquare,
+    setPlayerRemainingTime,
   } = useChess();
 
   const isPromoting = useCallback(

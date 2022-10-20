@@ -14,7 +14,7 @@ const Stopwatch = ({color}) => {
     const minutes = getMinutes(playerRemainingTime[color]);
     const seconds = getSeconds(playerRemainingTime[color]);
     return {minutes, seconds};
-  }, [playerRemainingTime, color]);
+  }, [playerRemainingTime]);
 
   useEffect(() => {
     if (chess.turn() === color && playerRemainingTime && gameOver === null) {
@@ -26,7 +26,7 @@ const Stopwatch = ({color}) => {
       }, 1000);
       return () => clearTimeout(id);
     }
-  }, [playerRemainingTime, color]);
+  });
 
   useEffect(() => {
     if (minutes <= 0 && seconds <= 0) {
