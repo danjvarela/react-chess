@@ -1,11 +1,11 @@
-import {useState, useMemo} from "react";
+import {useState, useMemo, useEffect} from "react";
 import {Dialog, DialogBody, DialogFooter, DialogHeader} from "@material-tailwind/react";
 import {useChess} from "contexts/chessContext";
 import ResetButton from "./ResetButton";
 
 const GameOverModal = () => {
-  const [open, setOpen] = useState(true);
-  const {gameOver, setGameOver, chess, resetBoard} = useChess();
+  const [open, setOpen] = useState(false);
+  const {gameOver, chess, resetBoard} = useChess();
 
   const {draw, stalemate, threefoldRepetition, insufficientMaterial, winner, timeRanOut} =
     useMemo(() => gameOver ?? {}, [gameOver]);
@@ -18,13 +18,13 @@ const GameOverModal = () => {
   const winningPlayer = useMemo(() => (winner === "w" ? "White" : "Black"), [winner]);
   const losingPlayer = useMemo(() => (winner === "w" ? "Black" : "White"), [winner]);
 
-  const title = useMemo(() => {
+  const title = () => {
     if (draw) return "Draw!";
     if (winner) return `${winningPlayer} wins!`;
     return "";
-  }, [gameOver]);
+  };
 
-  const description = useMemo(() => {
+  const description = () => {
     if (draw) {
       if (stalemate)
         return `Stalemate: There is no check but there is also no available moves for ${currentPlayer}.`;
@@ -38,23 +38,22 @@ const GameOverModal = () => {
       return `${winningPlayer} checkmated ${losingPlayer}`;
     }
     return "";
+  };
+
+  useEffect(() => {
+    setOpen(gameOver !== null);
   }, [gameOver]);
 
   const handleReset = () => {
-    setOpen(!open);
-    setGameOver(null);
+    setOpen(false);
     resetBoard();
   };
 
   return (
     <>
-      <Dialog
-        open={open && !!gameOver}
-        handler={() => setOpen(!open)}
-        className="bg-gray-900"
-      >
-        <DialogHeader className="text-gray-100">{title}</DialogHeader>
-        <DialogBody className="text-gray-200">{description}</DialogBody>
+      <Dialog open={open} handler={() => setOpen(!open)} className="bg-gray-900">
+        <DialogHeader className="text-gray-100">{title()}</DialogHeader>
+        <DialogBody className="text-gray-200">{description()}</DialogBody>
         <DialogFooter>
           <ResetButton onClick={handleReset} />
         </DialogFooter>

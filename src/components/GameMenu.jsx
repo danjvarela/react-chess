@@ -3,7 +3,7 @@ import {useChess} from "contexts/chessContext";
 import StartGameMenu from "./StartGameMenu";
 
 const GameMenu = () => {
-  const {resetBoard, setPlayerRemainingTime} = useChess();
+  const {resetBoard} = useChess();
 
   return (
     <div className="absolute left-full top-0 px-10 pt-9 w-1/2 flex flex-col gap-4">
