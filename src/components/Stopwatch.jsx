@@ -9,13 +9,14 @@ const Stopwatch = ({color}) => {
   const {chess, playerRemainingTime, setPlayerRemainingTime} = useChess();
 
   const {minutes, seconds} = useMemo(() => {
+    if (!playerRemainingTime) return {minutes: 0, seconds: 0};
     const minutes = getMinutes(playerRemainingTime[color]);
     const seconds = String(getSeconds(playerRemainingTime[color])).padStart(2, "0");
     return {minutes, seconds};
   }, [playerRemainingTime, color]);
 
   useEffect(() => {
-    if (chess.turn() === color) {
+    if (chess.turn() === color && playerRemainingTime) {
       const id = setTimeout(() => {
         setPlayerRemainingTime((prevTime) => ({
           ...prevTime,
@@ -29,6 +30,7 @@ const Stopwatch = ({color}) => {
   const turnStyle =
     chess.turn() === color ? "text-gray-900 bg-gray-100" : "text-gray-700 bg-gray-800";
 
+  if (!playerRemainingTime) return null;
   return (
     <Typography className={`${turnStyle} px-5 rounded-md`} variant="h4">
       {`${minutes}:${seconds}`}

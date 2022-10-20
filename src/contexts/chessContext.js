@@ -38,12 +38,13 @@ const ChessProvider = ({children}) => {
   const [possibleMoves, setPossibleMoves] = useState([]);
   const [gameOver, setGameOver] = useState(null);
   const [kingSquare, setKingSquare] = useState({w: "e1", b: "e8"});
-  const [playerRemainingTime, setPlayerRemainingTime] = useState({w: 105000, b: 105000});
+  const [playerRemainingTime, setPlayerRemainingTime] = useState(null);
   const [history, setHistory] = useState(chess.history({verbose: true}));
 
   const resetBoard = useCallback(() => {
     chess.reset();
     setSquares(chess.board().flat());
+    setPlayerRemainingTime(null);
   }, []);
 
   // gets the winner, returns null if there is none
