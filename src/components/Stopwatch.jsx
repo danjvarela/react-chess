@@ -6,7 +6,7 @@ const getMinutes = (time) => Math.floor((time % (1000 * 60 * 60)) / (1000 * 60))
 const getSeconds = (time) => Math.floor((time % (1000 * 60)) / 1000);
 
 const Stopwatch = ({color}) => {
-  const {chess, playerRemainingTime, setPlayerRemainingTime} = useChess();
+  const {chess, playerRemainingTime, setPlayerRemainingTime, gameOver} = useChess();
 
   const {minutes, seconds} = useMemo(() => {
     if (!playerRemainingTime) return {minutes: 0, seconds: 0};
@@ -16,7 +16,7 @@ const Stopwatch = ({color}) => {
   }, [playerRemainingTime, color]);
 
   useEffect(() => {
-    if (chess.turn() === color && playerRemainingTime) {
+    if (chess.turn() === color && playerRemainingTime && !gameOver) {
       const id = setTimeout(() => {
         setPlayerRemainingTime((prevTime) => ({
           ...prevTime,
